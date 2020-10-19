@@ -6,7 +6,7 @@ import time
 
 import numpy as np
 from dotmap import DotMap
-from gym.monitoring import VideoRecorder
+from monitoring import VideoRecorder
 
 
 class Agent:

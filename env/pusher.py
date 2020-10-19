@@ -12,11 +12,12 @@ from gym.envs.mujoco import mujoco_env
 class PusherEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     def __init__(self):
         dir_path = os.path.dirname(os.path.realpath(__file__))
+        # import pdb; pdb.set_trace();
         mujoco_env.MujocoEnv.__init__(self, '%s/assets/pusher.xml' % dir_path, 4)
         utils.EzPickle.__init__(self)
         self.reset_model()
 
-    def _step(self, a):
+    def step(self, a):
         obj_pos = self.get_body_com("object"),
         vec_1 = obj_pos - self.get_body_com("tips_arm")
         vec_2 = obj_pos - self.get_body_com("goal")
@@ -52,9 +53,10 @@ class PusherEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         return self._get_obs()
 
     def _get_obs(self):
+        #import pdb; pdb.set_trace()
         return np.concatenate([
-            self.model.data.qpos.flat[:7],
-            self.model.data.qvel.flat[:7],
+            self.data.qpos.flat[:7],
+            self.data.qvel.flat[:7],
             self.get_body_com("tips_arm"),
             self.get_body_com("object"),
         ])

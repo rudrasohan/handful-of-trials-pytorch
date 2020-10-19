@@ -16,7 +16,7 @@ class HalfCheetahEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         mujoco_env.MujocoEnv.__init__(self, '%s/assets/half_cheetah.xml' % dir_path, 5)
         utils.EzPickle.__init__(self)
 
-    def _step(self, action):
+    def step(self, action):
         self.prev_qpos = np.copy(self.model.data.qpos.flat)
         self.do_simulation(action, self.frame_skip)
         ob = self._get_obs()
@@ -30,9 +30,9 @@ class HalfCheetahEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
     def _get_obs(self):
         return np.concatenate([
-            (self.model.data.qpos.flat[:1] - self.prev_qpos[:1]) / self.dt,
-            self.model.data.qpos.flat[1:],
-            self.model.data.qvel.flat,
+            (self.data.qpos.flat[:1] - self.prev_qpos[:1]) / self.dt,
+            self.data.qpos.flat[1:],
+            self.data.qvel.flat,
         ])
 
     def reset_model(self):
